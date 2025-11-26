@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "API Rest para Jewerly-Store",
+  "keywords": [
+    "api",
+    "node",
+    "express",
+    "bcrypt",
+    "mongoose",
+    "jwt"
+  ],
+  "homepage": "https://github.com/guerrrerotolozar/Jewerly-Store-Backend#readme",
+  "bugs": {
+    "url": "https://github.com/guerrrerotolozar/Jewerly-Store-Backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guerrrerotolozar/Jewerly-Store-Backend.git"
+  },
+  "license": "ISC",
+  "author": "Ronald Zinedine Guerrero Toloza <guerrerotoloza.ro@gmail.com>",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
