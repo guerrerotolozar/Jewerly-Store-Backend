@@ -24,7 +24,7 @@
     "Felipe Cardenas <felipecas097@gmail.com>",
     "Juan Carlos Jimenez Gutierrez <jangojes@gmail.com>"
   ],
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "node --watch ./src/index.js"
