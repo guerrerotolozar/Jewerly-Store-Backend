@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGO_URI = 'mongodb://localhost:27017/db-foodz';
+const MONGO_URI = 'mongodb://localhost:27017/db-jewerly-store';
 
 
 const dbConnection = async () => {
@@ -8,7 +8,7 @@ const dbConnection = async () => {
     try{
         await mongoose.connect(MONGO_URI, {} );
 
-        console.log('si sirvio')
+        console.log('si sirve')
     }
     catch (error){
         //console.log(error);

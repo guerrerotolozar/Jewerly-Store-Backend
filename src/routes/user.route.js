@@ -1,16 +1,18 @@
-import express, { json } from 'express' 
+import {Router} from 'express' 
+import userModel from '../models/User.model.js';
 
-const router = express.Router();
+const router = Router();
 
 
-router.post( '/', ( req, res ) => {
+router.post( '/', async ( req, res ) => {
     const data = req.body;           //extraer el cuerpo de la paeticion
 
-    console.log(data)
+
+    const dataCreate = await userModel.create(data);
 
     res.json({
         msg: 'crear usuario',
-        data                        //Nueva forma    para evitar poner el valor tambien 
+        dataCreate                        //Nueva forma para evitar poner el valor tambien 
     })
 
 } );
