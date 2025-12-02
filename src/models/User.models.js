@@ -38,6 +38,14 @@ const userSchema = new Schema ({
         type: Boolean,
         default: true
     },
+    createDate: {
+        type: Date,
+        default: new Date().now
+    },
+    // code: {
+    //     type: String,
+    //     trim: true
+    // }
     // isVerified: {
     //     code: String,
     //     trim: true
