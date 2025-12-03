@@ -1,5 +1,6 @@
 // controlador: se debe encargar de recibir las peticiones y responder a ellas
-import { registerUser } from "../services/user.services.js";
+import userModel from "../models/User.models.js";
+import { dbGetAllUser, dbRegisterUser } from "../services/user.services.js";
 const createUser =  async ( req, res ) => {
 
     // Se controla la excepcion que ocurre en el paso 2
@@ -11,7 +12,7 @@ const createUser =  async ( req, res ) => {
         console.log( data);
     
         //Paso 2: Registrar los datos usando el userModel
-       const dataRegistered = await registerUser ( data );   //Registrar los datos en la base de datos
+       const dataRegistered = await dbRegisterUser ( data );   //Registrar los datos en la base de datos
     
         //Paso 3: Responder al cliente
         res.json({ 
@@ -26,8 +27,27 @@ const createUser =  async ( req, res ) => {
             msg: 'Error: No se pudo crear el usuario'
         });
     }
+}
+
+const getAllUser = async (req,res ) => {
+    //interactuar directamente con la base de datos 
+    const users = await dbGetAllUser();
+    try {
+
+    res.json({
+        msg: 'Obtiene todos los usuarios', 
+        users
+    });
+}
+catch (error) {
+    console.error(error);
+    res.json ({
+      msg: 'Error: No se pudo obtener el listado de usuarios'  
+    });
+  }
 } 
+
     
 export {
-    createUser
+    createUser, getAllUser
 }
