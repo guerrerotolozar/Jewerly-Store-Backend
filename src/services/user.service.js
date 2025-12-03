@@ -1,10 +1,25 @@
-import userModel from "../models/User.model.js";
+import userModel from "../models/User.models.js"
+// El servicio: se debe encargar solo de la comunicacion directa con la base de datos 
+const dbRegisterUser = async( newUser) => {
+  return await userModel.create ( newUser);   // async/await porque el modelo retorna una promesa
+}
 
-const registerUser = async(newUser) => {
+const dbGetAllUser = async () => {
+   return  await userModel.find();
+}
 
-    return await userModel.create(newUser);
+const dbGetUserById = async ( _id ) => {
+  return await userModel.findOne({_id }); 
+}
+
+const dbDeletUserById = async (_id ) => {
+    return await userModel.findOneAndDelete({_id});
+    return await userModel.findByIdAndDelete({_id})
 }
 
 export {
-    registerUser
+    dbRegisterUser,
+    dbGetAllUser,
+    dbGetUserById,
+    dbDeletUserById
 }

@@ -1,14 +1,15 @@
-import { Router } from 'express' 
-import { createUser } from '../controllers/user.controller.js';
+import express from 'express' 
 
-const router = Router();
+import { deleteUserById, getAllUser, getUserById, registerUser, updateUserById } from '../controllers/user.controller.js';
 
+const router = express.Router();
 
-router.post( '/',createUser );
+// DEfinicion de las rutas (Endpoints)
+router.post( '/', registerUser );
+router.get( '/', getAllUser );
+router.get('/:idUser', getUserById );  //parametrizar la ruta: Crear un parametro en la ruta que funje como variable
+router.delete('/:idUser', deleteUserById );
+router.patch('/:idUser', updateUserById );
 
-// router.get('/alo', (req, res) => {
-//     res.send('<h1>alo</h1>')
-// });
 
 export default router;
-
