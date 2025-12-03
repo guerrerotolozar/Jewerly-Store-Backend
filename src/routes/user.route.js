@@ -1,6 +1,6 @@
 import express from 'express' 
 
-import { deleteUserById, getAllUser, getUserById, registerUser } from '../controllers/user.controller.js';
+import { deleteUserById, getAllUser, getUserById, registerUser, updateUserById } from '../controllers/user.controller.js';
 
 const router = express.Router();
 
@@ -8,5 +8,8 @@ const router = express.Router();
 router.post( '/', registerUser );
 router.get( '/', getAllUser );
 router.get('/:idUser', getUserById );  //parametrizar la ruta: Crear un parametro en la ruta que funje como variable
-router.delete('/:idUser', deleteUserById);
+router.delete('/:idUser', deleteUserById );
+router.patch('/:idUser', updateUserById );
+
+
 export default router;

@@ -45,6 +45,7 @@ catch (error) {
     });
   }
 } 
+
 const getUserById = async (req, res) => {
     try {
         const idUser = req.params.idUser;
@@ -64,6 +65,7 @@ const getUserById = async (req, res) => {
         
     }
 }
+
 const deleteUserById = async ( req,res )  => {
     try {
         const idUser = req.params.idUser;
@@ -79,10 +81,37 @@ const deleteUserById = async ( req,res )  => {
         });
     }
 }
+
+ const updateUserById = async (req, res ) => {
+try {
+    const inputData = req.body; 
+    const idUser = req.params.idUser;
     
+    // const userUpdated = await userModel.findByIdAndUpdate(
+    //  idUser,                    // ID
+    //  inputData,                  // Datos a actualizar 
+    //  {new: true}// Configuracion 
+    // );
+     const userUpdated = await userModel.findOneAndUpdate(
+     {_id: idUser},       // Objeto de consulta debe tener el ID
+      inputData            // Datos a actualizar 
+     );
+    
+    res.json({
+        userUpdated
+    });
+    
+} catch (error) {
+    console.error( error );
+    res.json({
+        msg: 'Error: No pudo actualizar el usuario por ID'
+    });    
+  }
+}   
 export {
     registerUser, 
     getUserById,
     getAllUser,
-    deleteUserById
+    deleteUserById,
+    updateUserById
 }
