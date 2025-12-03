@@ -1,6 +1,6 @@
 // controlador: se debe encargar de recibir las peticiones y responder a ellas
 import userModel from "../models/User.models.js";
-import { dbGetAllUser, dbRegisterUser } from "../services/user.services.js";
+import { dbGetAllUser, dbGetUserById, dbRegisterUser } from "../services/user.services.js";
 const createUser =  async ( req, res ) => {
 
     // Se controla la excepcion que ocurre en el paso 2
@@ -46,8 +46,28 @@ catch (error) {
     });
   }
 } 
-
+const getUserById = async (req, res) => {
+    try {
+        const idUser = req.params.idUser;
+    
+       const user = await dbGetUserById(idUser);
+    
+        res.json({
+            user
+        });
+        
+    } 
+    catch (error) {
+        console.error( error );
+        res.json({
+            msg: 'Error: No pudo obtener usuario por ID'
+        });
+        
+    }
+}
     
 export {
-    createUser, getAllUser
+    createUser, 
+    getAllUser,
+    getUserById
 }

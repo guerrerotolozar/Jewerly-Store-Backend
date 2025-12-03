@@ -5,10 +5,15 @@ const dbRegisterUser = async( newUser) => {
 }
 
 const dbGetAllUser = async () => {
-     await userModel.find();
+   return  await userModel.find();
+}
+
+const dbGetUserById = async ( _id ) => {
+  return await userModel.findOne({_id }); 
 }
 
 export {
     dbRegisterUser,
-    dbGetAllUser
+    dbGetAllUser,
+    dbGetUserById
 }
