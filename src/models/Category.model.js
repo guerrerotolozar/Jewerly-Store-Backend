@@ -1,100 +1,57 @@
-import {Schema, model} from 'mongoose';
-
-
+import { Schema, model } from "mongoose";
 
 const categorySchema = new Schema(
-{
-    // Básico
-    name: { 
-        type: String,
-        required: true, 
-        trim: true 
+    {
+        name: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        description: {
+            type: String,
+            required: false,
+            trim: true
+        },
+        // Para jerarquía: referencia a otra categoría (ej: "anillos de oro" apunta a "anillos")
+        parent: {
+            type: Schema.Types.ObjectId,
+            ref: 'category', // Se refiere a sí mismo (auto-referencia)
+            required: false // Opcional, para categorías principales
+        },
+        // Alias amigable para URLs (ej: "anillos-de-oro")
+        slug: {
+            type: String,
+            required: false,
+            trim: true,
+            unique: true // Para evitar duplicados en URLs
+        },
+        // Para activar/desactivar (como en productos)
+        isActive: {
+            type: Boolean,
+            default: true
+        },
+        // Imagen opcional para la categoría
+        image: {
+            type: String,
+            required: false,
+            trim: true
+        },
+        // Lista de productos en esta categoría (referencias)
+        // products: [{
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'product' // Asumiendo que tu modelo de producto se llama 'Product'
+        // }]
     },
-    urlImage: { 
-        type: String,
-        required: false, 
-        trim: true 
-    },
-    category: {
-        type: Schema.Types.ObjectId,
-        ref: 'category',
-        required: false
-    },
-    description: { 
-        type: String, 
-        required: false, 
-        trim: true },
-
-    // Precio / estado
-    price: { 
-        type: Number, 
-        required: true 
-    },
-    isActive: { 
-        type: Boolean, 
-        default: true },
-
-    // Material
-    material: {
-        type: String,
-        required: true,
-        trim: true,
-        enum: ["oro", "plata", "acero", "otro"],
-    },
-    purity: {
-        type: String,
-        required: false,
-        trim: true, // ej: "18K", "14K", "925"
-    },
-    color: { 
-        type: String, 
-        required: false, 
-        trim: true 
-    }, // ej: "amarillo", "blanco", "rosa"
-
-    // Medidas
-    weightGrams: { 
-        type: Number, 
-        required: true, 
-        min: 0 
-    },
-    size: { 
-        type: String, 
-        required: false, 
-        trim: true 
-    }, // ej: talla anillo "7" o largo collar "45cm"
-
-    // Piedras (si tiene)
-    gemstone: {
-        type: String,
-        required: false,
-        trim: true, // ej: "diamante", "esmeralda", "circonia"
-    },
-    gemstoneCarats: { 
-        type: Number, 
-        equired: false, 
-        min: 0 },
-
-    // Certificado (si aplica)
-    certificate: { 
-        type: String, 
-        required: false, 
-        trim: true }, // ej: "GIA", "IGI", "Interno"
-    certificateNumber: { 
-        type: String, 
-        required: false, 
-        trim: true },
-},
-{
-    versionKey: false,
-    timestamps: true,
-}
+    {
+        versionKey: false,
+        timestamps: true
+    }
 );
 
+// Crear el modelo
 const categoryModel = model(
-    'category', // nombre de la lista(coleccion) de datos de los ususarios
-    categorySchema // nombre del esquema asociado al modelo 
-
+    'category', // Nombre de la colección (puedes cambiarlo si quieres)
+    categorySchema
 );
 
 export default categoryModel;
