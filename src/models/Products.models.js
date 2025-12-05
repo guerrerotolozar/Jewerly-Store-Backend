@@ -53,10 +53,20 @@ const productSchema = new Schema(
     }, // ej: "amarillo", "blanco", "rosa"
 
     // Medidas
-    weightGrams: { 
+    // weightGrams: { 
+    //     type: Number, 
+    //     required: true, 
+    //     min: 0 
+    // },
+    weight: { 
         type: Number, 
         required: true, 
         min: 0 
+    },
+    units: {
+        type: String,
+        require: true,
+        enum: [ 'k', 'onz' ]
     },
     size: { 
         type: String, 
