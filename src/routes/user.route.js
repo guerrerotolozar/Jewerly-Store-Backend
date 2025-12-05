@@ -1,8 +1,8 @@
-import express from 'express' 
+import {Router} from 'express' 
 
 import { deleteUserById, getAllUser, getUserById, registerUser, updateUserById } from '../controllers/user.controller.js';
 
-const router = express.Router();
+const router = Router();
 
 // DEfinicion de las rutas (Endpoints)
 router.post( '/', registerUser );
