@@ -4,6 +4,7 @@ import dbConnection from './config/mongo.config.js'
 import userRoute from './routes/user.route.js'
 import productRoute from './routes/products.route.js'
 import categoryRoute from './routes/category.route.js'
+import collectionRoute from './routes/collection.route.js'
 
 const app = express();                      // Invocando core Express
 const PORT = 3000;   
@@ -19,6 +20,7 @@ app.use( express.json() );
 app.use('/api/v1/user', userRoute);
 app.use('/api/v1/product', productRoute);
 app.use('/api/v1/category', categoryRoute);
+app.use('/api/v1/collection', collectionRoute);
 
 
 app.listen(PORT, () => {
