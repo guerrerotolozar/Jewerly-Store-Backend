@@ -12,6 +12,10 @@ const dbGetUserById = async (_id) => {
   return await userModel.findOne({ _id, isActive: true });
 }
 
+const dbGetUserByEmail = async (email) => {
+  return await userModel.findOne({ email });
+}
+
 const dbDeleteUserById = async (_id) => {
   return await userModel.findByIdAndDelete({ _id })
 }
@@ -20,5 +24,6 @@ export {
   dbRegisterUser,
   dbGetAllUsers,
   dbGetUserById,
+  dbGetUserByEmail,
   dbDeleteUserById
 }
