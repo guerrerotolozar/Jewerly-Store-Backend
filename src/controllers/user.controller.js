@@ -1,18 +1,25 @@
 // controlador: se debe encargar de recibir las peticiones y responder a ellas
+import { encryptedPassword } from "../helpers/bcrypt.helper.js";
 import userModel from "../models/User.model.js";
-import { dbDeleteUserById, dbGetAllUsers, dbGetUserById, dbRegisterUser } from "../services/user.service.js";
+import { dbDeleteUserById, dbGetAllUsers, dbGetUserByEmail, dbGetUserById, dbRegisterUser } from "../services/user.service.js";
 const registerUser = async (req, res) => {
 
     // Se controla la excepcion que ocurre en el paso 2
     try {
         //Paso 1: extraer el cuerpo de la peticion
-        const data = req.body;
+        const inputData = req.body;
+        //Verificar si el usuario existe
+        const userFound = await dbGetUserByEmail ( inputData.email );
 
-        //Mostrar en la consola el cuerpo de la peticion
-        console.log(data);
+        if(userFound ) {
+          return res.json({msg: 'No se puede registrar. El usuario ya existe' });
+        }
+        //Encriptar la contraseña que envio el usuario
+        inputData.password = encryptedPassword(inputData.password );    //Devuelve el password encriptado 
+        console.log('inputData antes de registrar : ', inputData);
 
-        //Paso 2: Registrar los datos usando el userModel
-        const dataRegistered = await dbRegisterUser(data);   //Registrar los datos en la base de datos
+        //Paso 2: Registrar el usuario 
+        const dataRegistered = await dbRegisterUser(inputData);   //Registrar los datos en la base de datos
 
         //Paso 3: Responder al cliente
         res.json({
