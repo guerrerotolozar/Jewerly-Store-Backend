@@ -9,7 +9,11 @@ import collectionRoute from './routes/collection.route.js'
 const app = express();                      // Invocando core Express
 const PORT = 3000;   
 
-dbConnection();
+import seedUnitTypes from './config/initialSetup.js';
+
+dbConnection().then(async () => {
+    await seedUnitTypes();
+});    
 
 // Middleware Express
 
