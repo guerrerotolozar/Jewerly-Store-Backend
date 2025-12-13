@@ -1,3 +1,4 @@
+import { json } from "express";
 import { verifyEncriptedPassword } from "../helpers/bcrypt.helper.js";
 import { generateToken } from "../helpers/jwt.helper.js";
 // import { generateToken } from "../helpers/jwt.helper.js";
@@ -42,11 +43,38 @@ const loginUser = async (req, res) => {
     res.json({ token, user: jsonUserFound });
 }
 
-const reNewToken = ( req, res ) => {
+const reNewToken = async ( req, res ) => {
     // Extrae el payload del objeto requests que hemos asignado desde el Middleware de Autenticacion
-    // const payload = req.payload;
-    // res.json({ payload });
-    res.json({ msg : "renovar token"})
+
+
+    //paso 1
+    const payload = req.payload;
+
+    //paso 2
+    const userFound = await dbGetUserByEmail ( payload.email);
+    if ( !userFound ){
+        return res.json ({
+            msg:"no se renueva el token. El usuario ha sido eliminado o esta inactivo"
+        })
+    }
+
+    //paso 3
+    const newPayload = {
+        id : userFound.id,          // Id 
+        name: userFound.name,       // Hola, Fulanito! 
+        email: userFound.email,     // Para realizar comunicaciones (anonimas)
+        role: userFound.role        // Para informar al frontend sobre la autorizacion que tienen los usuarios para acceder a las diferentes interfaces 
+    }
+
+    //paso 4
+    const newToken = generateToken(newPayload)
+
+    //paso 5
+    const jsonUserFound = userFound.toObject()
+    delete jsonUserFound.password
+
+    //paso 6
+    res.json({ token : newToken, user : jsonUserFound });
 }
 
 export {

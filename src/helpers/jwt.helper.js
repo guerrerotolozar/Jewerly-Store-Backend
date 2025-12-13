@@ -17,14 +17,21 @@ const generateToken = ( payload ) => {
 }
 
 const verifyToken = ( token ) => {
-    return jwt.verify(
-        token,              // Token Valido
-        'siax%haecnhcfxny', // Semilla (Palabra Secreta) ==> Salt
-    );
+    try {
+        
+        return jwt.verify(
+            token,              // Token Valido
+            'siax%haecn$cfxny', // Semilla (Palabra Secreta) ==> Salt
+        );
+    } catch (error) {
+        console.error( error);
+        return null
+    }
+    
 }
 
 
 export {
     generateToken,
-    // verifyToken
+    verifyToken
 }
