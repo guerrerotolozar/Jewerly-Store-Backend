@@ -2,14 +2,18 @@ import jwt from 'jsonwebtoken';
 
 const generateToken = ( payload ) => {
 
-    const token = jwt.sign(
-        payload,            // Carga util
-        'siax%haecnhcfxny', // Semilla (Palabra Secreta) ==> Salt
-        { expiresIn: '1h' }                  // Opciones de configuracion del Token
-    );
+    try {
+        return jwt.sign(
+            payload,            // Carga util
+            'siax%haecn$cfxny', // Semilla (Palabra Secreta) ==> Salt
+            { expiresIn: '1h' }                  // Opciones de configuracion del Token
+        );
 
-    console.info( 'token: ', token );
-    return token;
+    } catch (error) {
+        console.error( error);
+        return null
+    }
+
 }
 
 const verifyToken = ( token ) => {
@@ -22,5 +26,5 @@ const verifyToken = ( token ) => {
 
 export {
     generateToken,
-    verifyToken
+    // verifyToken
 }

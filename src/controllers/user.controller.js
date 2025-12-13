@@ -1,24 +1,34 @@
 // controlador: se debe encargar de recibir las peticiones y responder a ellas
+import { encryptedPassword } from "../helpers/bcrypt.helper.js";
 import userModel from "../models/User.model.js";
-import { dbDeleteUserById, dbGetAllUsers, dbGetUserById, dbRegisterUser } from "../services/user.service.js";
+import { dbDeleteUserById, dbGetAllUsers, dbGetUserByEmail, dbGetUserById, dbRegisterUser } from "../services/user.service.js";
+
 const registerUser = async (req, res) => {
 
-    // Se controla la excepcion que ocurre en el paso 2
     try {
         //Paso 1: extraer el cuerpo de la peticion
-        const data = req.body;
+        const inputData = req.body;
 
-        //Mostrar en la consola el cuerpo de la peticion
-        console.log(data);
 
-        //Paso 2: Registrar los datos usando el userModel
-        const dataRegistered = await dbRegisterUser(data);   //Registrar los datos en la base de datos
+        //paso 2: busqueda de usuario por email
+        const userFound = await dbGetUserByEmail(inputData.email)
+        if (userFound) {
+            return res.json({
+                msg : "el usuario ya existe"
+            })
+        }
 
-        const jsonUserFound = userRegistered.toObject();
+        //paso 3 : encriptacion de contraseña
+        inputData.password = encryptedPassword(inputData.password)
 
+        //Paso 4: Registrar los datos usando el userModel
+        const dataRegistered = await dbRegisterUser(inputData);   //Registrar los datos en la base de datos
+
+        //paso 5: Eliminar la contraseña para que no sea visible en bases de datos
+        const jsonUserFound = dataRegistered.toObject();
         delete jsonUserFound.password;
 
-        //Paso 3: Responder al cliente
+        //Paso 6: Responder al cliente
         res.json({user: jsonUserFound});
     }
     catch (error) {
@@ -28,6 +38,7 @@ const registerUser = async (req, res) => {
         });
     }
 }
+
 const getAllUsers = async (req, res) => {
     //interactuar directamente con la base de datos 
     const users = await dbGetAllUsers();

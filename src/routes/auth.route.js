@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import { registerUser } from '../controllers/user.controller.js';
 import { loginUser, reNewToken } from '../controllers/auth.controller.js';
-import authenticationUser from '../middlewares/authetication.middleware.js';
-import authorizationUser from '../middlewares/authorization.middleware.js';
+// import authenticationUser from '../middlewares/authetication.middleware.js';
+// import authorizationUser from '../middlewares/authorization.middleware.js';
 
 const router = Router ();
 
@@ -13,7 +13,7 @@ router.post('/register', registerUser);
 
 router.get( 
     '/renew-token', 
-    [ authenticationUser, authorizationUser ], 
+    // [ authenticationUser, authorizationUser ], 
     reNewToken 
 );
 

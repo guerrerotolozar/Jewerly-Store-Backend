@@ -1,8 +1,8 @@
-const authorizationUser = ( req, res, next ) => {
-    console.log( 'Hola soy el Middleware de Autorizacion' );
+// const authorizationUser = ( req, res, next ) => {
+//     console.log( 'Hola soy el Middleware de Autorizacion' );
 
-    next();
-}
+//     next();
+// }
 
 
-export default authorizationUser;
+// export default authorizationUser;
