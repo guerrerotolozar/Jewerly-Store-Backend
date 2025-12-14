@@ -3,11 +3,6 @@ const withoutRole = ( req, res, next ) => {
     //paso 1
 
     delete req.body.role
-
-
-    //paso 2 
-
-    //paso 3
     next();
 }
 

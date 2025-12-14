@@ -23,7 +23,23 @@ const userSchema = new Schema({
         required : true,
         unique : true,
         trim : true,
-        lowercase: true
+        match : [
+            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+        ]
+        //^ y $ → inicio y fin del string.                                                                                              \
+        // [a-zA-Z0-9._%+-]+ // Limita y asegura que estos caracteres esten presentes en la parte inical del correo aun antes de una @   |
+            // letras mayúsculas/minúsculas                                                                                              |
+            // números                                                                                                                   |
+            // . _ % + -                                                                                                                 |
+        // @ → literal.                                                                                                                  |
+        //                                                                                                                                > Regex
+        // [a-zA-Z0-9.-]+ // Limita y asegura la estructura del dominio que puede llevar                                                 |
+            // letras mayúsculas/minúsculas                                                                                              |
+            // números                                                                                                                   |
+            // . - (caso hipotetico puede ser algo como sub.dominio.com (un . extra) )                                                   |
+        // \. → el punto antes de com, co, etc.                                                                                          |
+        // [a-zA-Z]{2,} → mínimo 2 letras, sin límite superior (com, info, museum, etc).                                                /
+
     },
     password:/*"2554"*/{
         type : String,

@@ -9,7 +9,6 @@ const registerUser = async (req, res) => {
         //Paso 1: extraer el cuerpo de la peticion
         const inputData = req.body;
 
-
         //paso 2: busqueda de usuario por email
         const userFound = await dbGetUserByEmail(inputData.email)
         if (userFound) {
@@ -33,6 +32,19 @@ const registerUser = async (req, res) => {
     }
     catch (error) {
         console.error(error);
+
+        if (error.name === 'ValidationError') {
+            // ¿Tiene error específico en el campo email?
+            if (error.errors && error.errors.email) {
+                return res.json({
+                    msg: 'Formato de email incorrecto'
+                });
+            }
+            return res.json({
+                msg: 'Datos inválidos',
+                error: error.message
+            });
+        }
         res.json({
             msg: 'Error: No se pudo crear el usuario'
         });
