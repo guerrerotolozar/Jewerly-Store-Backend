@@ -8,7 +8,7 @@ import collectionRoute from './routes/collection.route.js'
 import authRoute from './routes/auth.route.js'
 
 const app = express();                      // Invocando core Express
-const PORT = 3000;   
+const PORT = process.env.PORT || 3030;   
 
 import seedUnitTypes from './config/initialSetup.js';
 

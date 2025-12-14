@@ -5,7 +5,7 @@ const generateToken = ( payload ) => {
     try {
         return jwt.sign(
             payload,            // Carga util
-            'siax%haecn$cfxny', // Semilla (Palabra Secreta) ==> Salt
+            process.env.JWT_SEED, // Semilla (Palabra Secreta) ==> Salt
             { expiresIn: '1h' }                  // Opciones de configuracion del Token
         );
 
@@ -21,7 +21,7 @@ const verifyToken = ( token ) => {
         
         return jwt.verify(
             token,              // Token Valido
-            'siax%haecn$cfxny', // Semilla (Palabra Secreta) ==> Salt
+            process.env.JWT_SEED // Semilla (Palabra Secreta) ==> Salt
         );
     } catch (error) {
         console.error( error);
