@@ -1,5 +1,6 @@
 // controlador: se debe encargar de recibir las peticiones y responder a ellas
 import { encryptedPassword } from "../helpers/bcrypt.helper.js";
+import validatePassword from "../helpers/password.helper.js";
 import userModel from "../models/User.model.js";
 import { dbDeleteUserById, dbGetAllUsers, dbGetUserByEmail, dbGetUserById, dbRegisterUser } from "../services/user.service.js";
 
@@ -17,17 +18,25 @@ const registerUser = async (req, res) => {
             })
         }
 
-        //paso 3 : encriptacion de contraseña
+        //paso 3: validar contraseña para que cumpla los requerimientos antes de la encriptacion
+        const passwordCheck = validatePassword(inputData.password)
+        if (!passwordCheck.validacion) {
+                return res.json({
+                    msg: passwordCheck.msg
+                });
+            }
+
+        //paso 4 : encriptacion de contraseña
         inputData.password = encryptedPassword(inputData.password)
 
-        //Paso 4: Registrar los datos usando el userModel
+        //Paso 5: Registrar los datos usando el userModel
         const dataRegistered = await dbRegisterUser(inputData);   //Registrar los datos en la base de datos
 
-        //paso 5: Eliminar la contraseña para que no sea visible en bases de datos
+        //paso 6: Eliminar la contraseña para que no sea visible en bases de datos
         const jsonUserFound = dataRegistered.toObject();
         delete jsonUserFound.password;
 
-        //Paso 6: Responder al cliente
+        //Paso 7: Responder al cliente
         res.json({user: jsonUserFound});
     }
     catch (error) {

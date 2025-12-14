@@ -45,7 +45,6 @@ const userSchema = new Schema({
         type : String,
         required : true,
         trim: true,
-        minLength : 6,
     },
     role:/*"admin"*/{
         type : String,
