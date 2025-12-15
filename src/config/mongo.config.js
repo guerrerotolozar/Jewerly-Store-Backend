@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGO_URI = 'mongodb://localhost:27017/db-jewerly-store';
+const MONGO_URI = process.env.DB_URI || 'mongodb://localhost:27017/default';
 
 
 const dbConnection = async () => {

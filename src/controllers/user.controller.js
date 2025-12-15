@@ -1,33 +1,65 @@
 // controlador: se debe encargar de recibir las peticiones y responder a ellas
+import { encryptedPassword } from "../helpers/bcrypt.helper.js";
+import validatePassword from "../helpers/password.helper.js";
 import userModel from "../models/User.model.js";
-import { dbDeleteUserById, dbGetAllUsers, dbGetUserById, dbRegisterUser } from "../services/user.service.js";
+import { dbDeleteUserById, dbGetAllUsers, dbGetUserByEmail, dbGetUserById, dbRegisterUser } from "../services/user.service.js";
+
 const registerUser = async (req, res) => {
 
-    // Se controla la excepcion que ocurre en el paso 2
     try {
         //Paso 1: extraer el cuerpo de la peticion
-        const data = req.body;
+        const inputData = req.body;
 
-        //Mostrar en la consola el cuerpo de la peticion
-        console.log(data);
+        //paso 2: busqueda de usuario por email
+        const userFound = await dbGetUserByEmail(inputData.email)
+        if (userFound) {
+            return res.json({
+                msg : "el usuario ya existe"
+            })
+        }
 
-        //Paso 2: Registrar los datos usando el userModel
-        const dataRegistered = await dbRegisterUser(data);   //Registrar los datos en la base de datos
+        //paso 3: validar contraseña para que cumpla los requerimientos antes de la encriptacion
+        const passwordCheck = validatePassword(inputData.password)
+        if (!passwordCheck.validacion) {
+                return res.json({
+                    msg: passwordCheck.msg
+                });
+            }
 
-        const jsonUserFound = userRegistered.toObject();
+        //paso 4 : encriptacion de contraseña
+        inputData.password = encryptedPassword(inputData.password)
 
+        //Paso 5: Registrar los datos usando el userModel
+        const dataRegistered = await dbRegisterUser(inputData);   //Registrar los datos en la base de datos
+
+        //paso 6: Eliminar la contraseña para que no sea visible en bases de datos
+        const jsonUserFound = dataRegistered.toObject();
         delete jsonUserFound.password;
 
-        //Paso 3: Responder al cliente
+        //Paso 7: Responder al cliente
         res.json({user: jsonUserFound});
     }
     catch (error) {
         console.error(error);
+
+        if (error.name === 'ValidationError') {
+            // ¿Tiene error específico en el campo email?
+            if (error.errors && error.errors.email) {
+                return res.json({
+                    msg: 'Formato de email incorrecto'
+                });
+            }
+            return res.json({
+                msg: 'Datos inválidos',
+                error: error.message
+            });
+        }
         res.json({
             msg: 'Error: No se pudo crear el usuario'
         });
     }
 }
+
 const getAllUsers = async (req, res) => {
     //interactuar directamente con la base de datos 
     const users = await dbGetAllUsers();

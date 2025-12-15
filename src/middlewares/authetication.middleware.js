@@ -13,11 +13,15 @@ const authenticationUser = ( req, res, next ) => {
     
         // Paso 3: Verificar si el token es valido
         const payload = verifyToken( token );
-        
-        // Paso 4: Enviar a traves del Request los datos del payload
-        req.payload  = payload;
 
-        // Paso 5: Saltar a la siguiente funcion definida en la ruta
+        // paso 4 :  eliminar esas cosas que son inutiles al ojo 
+        delete payload.iat
+        delete payload.exp
+        
+        // Paso 5: Enviar a traves del Request los datos del payload
+        req.payload = payload;
+
+        // Paso 6: Saltar a la siguiente funcion definida en la ruta
         next();
         
     } catch (error) {
