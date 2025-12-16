@@ -1,18 +1,14 @@
 import { Router } from 'express';
+import { deletecategoryById, getAllcategory, getcategoryById, registercategory } from '../controllers/category.controller.js';
 
-import {
-    registerCategory,
-    getCategoryById,
-    getAllCategories,
-    deleteCategoryById,
-} from '../controllers/category.controller.js';
+
 
 const router = Router();
 
 // Definición de las rutas (Endpoints)
-router.post('/', registerCategory);
-router.get('/', getAllCategories);
-router.get('/:idcategory', getCategoryById); // el param de ruta sigue igual
-router.delete('/:idcategory', deleteCategoryById);
+router.post('/', registercategory);
+router.get('/', getAllcategory);
+router.get('/:idcategory', getcategoryById); // el param de ruta sigue igual
+router.delete('/:idcategory', deletecategoryById);
 
 export default router;

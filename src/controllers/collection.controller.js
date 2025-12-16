@@ -1,5 +1,5 @@
 import collectionModel from "../models/collection.model.js";
-import { dbDeletcollectionById, dbGetAllcollection, dbGetcollectionById, dbRegistercollection } from "../services/collection.services.js";
+import { dbDeleteCollectionById, dbGetAllCollections, dbGetCollectionById, dbRegisterCollection } from "../services/collection.services.js";
 
 const registercollection = async ( req, res ) => {
     
@@ -8,7 +8,7 @@ const registercollection = async ( req, res ) => {
 
         console.log( inputData);
             
-       const collectionRegistered = await dbRegistercollection ( inputData );   //Registrar los datos en la base de datos
+       const collectionRegistered = await dbRegisterCollection ( inputData );   //Registrar los datos en la base de datos
             
         res.json({ 
             msg:'create collection',
@@ -24,7 +24,7 @@ const registercollection = async ( req, res ) => {
     }
 }
 const getAllcollection = async ( req,res ) => {
-    const collections = await dbGetAllcollection ();
+    const collections = await dbGetAllCollections ();
     try {
 
     res.json({
@@ -44,7 +44,7 @@ const getcollectionById = async (req,res) => {
     try {
         const idcollections = req.params.idcollections;
     
-        const collectionFound = await dbGetcollectionById(idcollections);
+        const collectionFound = await dbGetCollectionById(idcollections);
     
         res.json({
             collectionFound
@@ -61,7 +61,7 @@ const getcollectionById = async (req,res) => {
 const deletecollectionById = async ( req,res ) => {
     try {
         const idcollections = req.params.idcollections;
-        const collectionDeleted = await dbDeletcollectionById (idcollections)
+        const collectionDeleted = await dbDeleteCollectionById (idcollections)
             res.json({
                 collectionDeleted   
             });

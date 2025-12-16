@@ -6,15 +6,12 @@ import productRoute from './routes/products.route.js'
 import categoryRoute from './routes/category.route.js'
 import collectionRoute from './routes/collection.route.js'
 import authRoute from './routes/auth.route.js'
+import reviewsRoute from './routes/reviews.route.js'
 
 const app = express();                      // Invocando core Express
 const PORT = process.env.PORT || 3030;   
 
-import seedUnitTypes from './config/initialSetup.js';
-
-dbConnection().then(async () => {
-    await seedUnitTypes();
-});    
+dbConnection();  
 
 // Middleware Express
 
@@ -27,6 +24,7 @@ app.use('/api/v1/user', userRoute);
 app.use('/api/v1/product', productRoute);
 app.use('/api/v1/category', categoryRoute);
 app.use('/api/v1/collection', collectionRoute);
+app.use('/api/v1/reviews', reviewsRoute);
 
 
 app.listen(PORT, () => {

@@ -1,14 +1,14 @@
 import { Router } from 'express'
 
-import { registerCollection, deleteCollectionById, getAllCollections, getCollectionById } from '../controllers/collection.controller.js';
+import { deletecollectionById, getAllcollection, getcollectionById, registercollection } from '../controllers/collection.controller.js';
 
 const router = Router();
 
 // DEfinicion de las rutas (Endpoints)
-router.post('/', registerCollection);
-router.get('/', getAllCollections);
-router.get('/:idcollection', getCollectionById);  //parametrizar la ruta: Crear un parametro en la ruta que funje como variable
-router.delete('/:idcollection', deleteCollectionById);
+router.post('/', registercollection);
+router.get('/', getAllcollection);
+router.get('/:idcollection', getcollectionById);  //parametrizar la ruta: Crear un parametro en la ruta que funje como variable
+router.delete('/:idcollection', deletecollectionById);
 
 
 export default router;

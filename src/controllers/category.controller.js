@@ -1,4 +1,3 @@
-import { dbRegistercategory, dbGetAllcategory , dbGetcategoryById, dbDeletcategoryById } from "../services/category.service.js";
 const registercategory =  async ( req, res ) => {
 
     // Se controla la excepcion que ocurre en el paso 2

@@ -16,7 +16,7 @@ const dbGetCollectionById = async (_id) => {
 };
 
 const dbDeleteCollectionById = async (_id) => {
-    return await collectionModel.findByIdAndDelete({ _id });
+    return await collectionModel.findByIdAndDelete(_id);
 };
 
 export {
