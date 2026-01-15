@@ -10,12 +10,6 @@ import authRoute from './routes/auth.route.js'
 const app = express();                      // Invocando core Express
 const PORT = process.env.PORT || 3030;   
 
-import seedUnitTypes from './config/initialSetup.js';
-
-dbConnection().then(async () => {
-    await seedUnitTypes();
-});    
-
 // Middleware Express
 
 // app.use('/api/v1/user', require('./routes/user.route.js'/*,'./routes/products.route.js' => no se puede meter 2 en una sola*/))
@@ -28,6 +22,8 @@ app.use('/api/v1/product', productRoute);
 app.use('/api/v1/category', categoryRoute);
 app.use('/api/v1/collection', collectionRoute);
 
+
+dbConnection();
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}/api/v1`)

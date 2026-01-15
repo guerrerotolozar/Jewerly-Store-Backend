@@ -1,4 +1,4 @@
-import { dbRegistercategory, dbGetAllcategory , dbGetcategoryById, dbDeletcategoryById } from "../services/category.service.js";
+import { dbGetAllCategories , dbDeleteCategoryById, dbRegisterCategory, dbGetCategoryById } from "../services/category.service.js";
 const registercategory =  async ( req, res ) => {
 
     // Se controla la excepcion que ocurre en el paso 2
@@ -10,11 +10,11 @@ const registercategory =  async ( req, res ) => {
         console.log( data);
     
         //Paso 2: Registrar los datos usando el categoryModel
-       const dataRegistered = await dbRegistercategory ( data );   //Registrar los datos en la base de datos
+       const dataRegistered = await dbRegisterCategory ( data );   //Registrar los datos en la base de datos
     
         //Paso 3: Responder al cliente
         res.json({ 
-            msg:'create categorys',
+            msg:'create categories',
              //data: data,             // Forma tradicional
              dataRegistered            // ECMAScript 2015 
         });
@@ -22,24 +22,24 @@ const registercategory =  async ( req, res ) => {
     catch (error) {
         console.error( error );
         res.json({
-            msg: 'Error: No se pudo crear el usuario'
+            msg: 'Error: No se pudo crear la categoría'
         });
     }
 }
 const getAllcategory = async (req,res ) => {
     //interactuar directamente con la base de datos 
     try {
-        const categorys = await dbGetAllcategory();
+        const categorys = await dbGetAllCategories();
 
     res.json({
-        msg: 'Obtiene todos los usuarios', 
+        msg: 'Obtener todas las categorías', 
         categorys
     });
 }
 catch (error) {
     console.error(error);
     res.json ({
-        msg: 'Error: No se pudo obtener el listado de usuarios'  
+        msg: 'Error: No se pudo obtener el listado de las categorías'  
     });
 }
 } 
@@ -48,7 +48,7 @@ const getcategoryById = async (req, res) => {
     try {
         const idcategory = req.params.idcategory;
     
-        const category = await dbGetcategoryById(idcategory);
+        const category = await dbGetCategoryById(idcategory);
     
         res.json({
             category
@@ -58,7 +58,7 @@ const getcategoryById = async (req, res) => {
     catch (error) {
         console.error( error );
         res.json({
-            msg: 'Error: No pudo obtener usuario por ID'
+            msg: 'Error: No se pudo obtener la categoría por ID'
         });
         
     }
@@ -67,7 +67,7 @@ const getcategoryById = async (req, res) => {
 const deletecategoryById = async ( req,res )  => {
     try {
         const idcategory = req.params.idcategory;
-        const categoryDeleted = await dbDeletcategoryById (idcategory)
+        const categoryDeleted = await dbDeleteCategoryById (idcategory)
             res.json({
                 categoryDeleted   
             });
@@ -75,7 +75,7 @@ const deletecategoryById = async ( req,res )  => {
     catch (error) {
         console.error ( error);
         res.json ({
-            msg: 'Error: no se pudo eliminar usuario'
+            msg: 'Error: no se pudo eliminar la categoría'
         });
     }
 }

@@ -12,9 +12,9 @@ const dbConnection = async () => {
     }
     catch (error){
         //console.log(error);
-        console.log('error al inicar la base de datos')
+        console.log('error al iniciar la base de datos')
     }
 
 }
-'./config/mongo.config.js'
+
 export default dbConnection

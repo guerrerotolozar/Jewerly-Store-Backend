@@ -30,6 +30,11 @@ const productSchema = new Schema(
         type: Number, 
         required: true 
     },
+    stock: { 
+        type: Number, 
+        required: true 
+    },
+
     isActive: { 
         type: Boolean, 
         default: true },
@@ -53,16 +58,18 @@ const productSchema = new Schema(
     }, // ej: "amarillo", "blanco", "rosa"
 
     // Medidas
-    weightGrams: { 
-        type: Number, 
-        required: true, 
-        min: 0 
-    },
+
     size: { 
         type: String, 
         required: false, 
         trim: true 
     }, // ej: talla anillo "7" o largo collar "45cm"
+
+    weightGrams: { 
+        type: Number, 
+        required: true, 
+        min: 0 
+    },
 
     // Piedras (si tiene)
     gemstone: {
@@ -72,7 +79,7 @@ const productSchema = new Schema(
     },
     gemstoneCarats: { 
         type: Number, 
-        equired: false, 
+        required: false, 
         min: 0 },
 
     // Certificado (si aplica)

@@ -12,10 +12,10 @@ const loginUser = async (req, res) => {
         return res.json({ msg: 'Usuario no existe. Por favor haga su registro' });
     }
 
-    //paso 2: verificar si la contrasenia coincide 
+    //paso 2: verificar si la contraseña coincide 
     const isMatch = verifyEncriptedPassword(inputData.password, userFound.password);
     if (!isMatch) {
-        return res.json({ msg: 'Credenciales invalidas' });
+        return res.json({ msg: 'Credenciales inválidas' });
     }
     
     //paso 3: generar credencial digital (token)
@@ -23,7 +23,7 @@ const loginUser = async (req, res) => {
         id : userFound.id,          // Id 
         name: userFound.name,       // Hola, Fulanito! 
         email: userFound.email,     // Para realizar comunicaciones (anonimas)
-        role: userFound.role        // Para informar al frontend sobre la autorizacion que tienen los usuarios para acceder a las diferentes interfaces 
+        role: userFound.role        // Para informar al frontend sobre la autorización que tienen los usuarios para acceder a las diferentes interfaces 
     };
 
     const token = generateToken( payload );
@@ -33,8 +33,8 @@ const loginUser = async (req, res) => {
     
     // paso 4: Eliminar propiedades con datos sensibles 
 
-    //userFound es un BJSON (JSON Binario)
-    const jsonUserFound = userFound.toObject();     // Convertir un BJSON a JSON
+    //userFound es un BSON (JSON Binario)
+    const jsonUserFound = userFound.toObject();     // Convertir un BSON a JSON
     delete jsonUserFound.password;                  // Elimina la propiedad 'password' de un JSON
 
     //paso 5: responder al cliente 
@@ -42,7 +42,7 @@ const loginUser = async (req, res) => {
 }
 
 const reNewToken = async ( req, res ) => {
-    // Extrae el payload del objeto requests que hemos asignado desde el Middleware de Autenticacion
+    // Extrae el payload del objeto requests que hemos asignado desde el Middleware de Autenticación
 
 
     //paso 1
@@ -52,7 +52,7 @@ const reNewToken = async ( req, res ) => {
     const userFound = await dbGetUserByEmail ( payload.email);
     if ( !userFound ){
         return res.json ({
-            msg:"no se renueva el token. El usuario ha sido eliminado o esta inactivo"
+            msg:"no se renueva el token. El usuario ha sido eliminado o está inactivo"
         })
     }
 
@@ -60,8 +60,8 @@ const reNewToken = async ( req, res ) => {
     const newPayload = {
         id : userFound.id,          // Id 
         name: userFound.name,       // Hola, Fulanito! 
-        email: userFound.email,     // Para realizar comunicaciones (anonimas)
-        role: userFound.role        // Para informar al frontend sobre la autorizacion que tienen los usuarios para acceder a las diferentes interfaces 
+        email: userFound.email,     // Para realizar comunicaciones (anónimas)
+        role: userFound.role        // Para informar al frontend sobre la autorización que tienen los usuarios para acceder a las diferentes interfaces 
     }
 
     //paso 4
