@@ -31,47 +31,46 @@ const getAllcategory = async (req,res ) => {
     try {
         const categorys = await dbGetAllCategories();
 
-    res.json({
-        msg: 'Obtener todas las categorías', 
-        categorys
-    });
-}
-catch (error) {
-    console.error(error);
-    res.json ({
-        msg: 'Error: No se pudo obtener el listado de las categorías'  
-    });
-}
+        res.json({
+            msg: 'Obtener todas las categorías', 
+            categorys
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.json ({
+            msg: 'Error: No se pudo obtener el listado de las categorías'  
+        });
+    }
 } 
 
 const getcategoryById = async (req, res) => {
     try {
         const idcategory = req.params.idcategory;
-    
+        
         const category = await dbGetCategoryById(idcategory);
-    
+        
         res.json({
             category
         });
-        
     } 
     catch (error) {
         console.error( error );
         res.json({
             msg: 'Error: No se pudo obtener la categoría por ID'
         });
-        
     }
 }
 
 const deletecategoryById = async ( req,res )  => {
     try {
         const idcategory = req.params.idcategory;
-        const categoryDeleted = await dbDeleteCategoryById (idcategory)
-            res.json({
-                categoryDeleted   
-            });
-        }    
+        const categoryDeleted = await dbDeleteCategoryById (idcategory);
+        
+        res.json({
+            categoryDeleted   
+        });
+    }    
     catch (error) {
         console.error ( error);
         res.json ({
