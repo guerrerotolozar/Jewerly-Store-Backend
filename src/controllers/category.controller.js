@@ -6,6 +6,17 @@ const registercategory =  async ( req, res ) => {
         //Paso 1: extraer el cuerpo de la peticion
         const data = req.body;    
 
+        // paso obtener categoria del padre si existe
+
+        if( !data.parent || data.parent.length <= 23 || data.parent.length >= 25 ) {
+            data.parent = null;
+        }
+
+        // crea el slug a partir del nombre
+        if( data.name ) {
+            data.slug = data.name.toLowerCase().replace( ' ', '-' )
+        }
+
         //Mostrar en la consola el cuerpo de la peticion
         console.log( data);
     

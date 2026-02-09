@@ -45,6 +45,10 @@ const userSchema = new Schema({
         type : String,
         required : true,
         trim: true,
+        minlength : 6,
+        // match : [
+        //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/
+        // ]
     },
     role:/*"admin"*/{
         type : String,
@@ -52,7 +56,7 @@ const userSchema = new Schema({
         enum : ['admin','colaborator','registered'], // Crear "predeterminados"
         default: 'registered'
     },
-    isActive : {
+    userStatus : {
         type : Boolean,
         default : true
     },

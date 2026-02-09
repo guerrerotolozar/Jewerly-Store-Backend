@@ -5,15 +5,15 @@ const dbRegisterUser = async (newUser) => {
 }
 
 const dbGetAllUsers = async () => {
-  return await userModel.find({ isActive: true });
+  return await userModel.find({ userStatus: true });
 }
 
 const dbGetUserById = async (_id) => {
-  return await userModel.findOne({ _id, isActive: true });
+  return await userModel.findOne({ _id, userStatus: true });
 }
 
 const dbGetUserByEmail = async (email) => {
-  return await userModel.findOne({ email, isActive: true });
+  return await userModel.findOne({ email, userStatus: true });
 }
 
 const dbDeleteUserById = async (_id) => {

@@ -16,7 +16,7 @@ const categorySchema = new Schema(
         parent: {
             type: Schema.Types.ObjectId,
             ref: 'category', // Se refiere a sí mismo (auto-referencia)
-            required: false // Opcional, para categorías principales
+            default: null // Opcional, para categorías principales
         },
         // Alias amigable para URLs (ej: "anillos-de-oro")
         slug: {

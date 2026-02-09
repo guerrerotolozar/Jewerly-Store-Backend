@@ -1,42 +1,20 @@
-import { Router } from 'express'
+import { Router } from 'express';
 
 import {
-  registercategory,
-  getAllcategory,
-  getcategoryById,
-  deletecategoryById,
-} from '../controllers/category.controller.js'
+    registercategory,
+    getAllcategory,
+    getcategoryById,
+    deletecategoryById,
+} from '../controllers/category.controller.js';
+import authenticationUser from '../middlewares/authentication.middleware.js';
+import authorizationUser from '../middlewares/authorization.middleware.js';
 
-import authenticationUser from '../middlewares/authentication.middleware.js'
-import authorizationUser from '../middlewares/authorization.middleware.js'
+const router = Router();
 
-const router = Router()
+// Definición de las rutas (Endpoints)
+router.post('/', /* [authenticationUser, authorizationUser],*/ registercategory);
+router.get('/', /* [authenticationUser, authorizationUser],*/ getAllcategory); // el param de ruta sigue igual
+router.get('/:idcategory', [authenticationUser, authorizationUser], getcategoryById);
+router.delete('/:idcategory', [authenticationUser, authorizationUser], deletecategoryById);
 
-// CREAR categoría (protegido)
-router.post(
-  '/',
- // [authenticationUser, authorizationUser],
-  registercategory
-)
-
-// LISTAR categorías (abierto para frontend en desarrollo)
-router.get(
-  '/',
-  getAllcategory
-)
-
-// OBTENER categoría por ID (protegido)
-router.get(
-  '/:idcategory',
-  [authenticationUser, authorizationUser],
-  getcategoryById
-)
-
-// ELIMINAR categoría (protegido)
-router.delete(
-  '/:idcategory',
-  [authenticationUser, authorizationUser],
-  deletecategoryById
-)
-
-export default router
+export default router;
