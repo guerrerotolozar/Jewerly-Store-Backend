@@ -1,5 +1,5 @@
 import productModel from "../models/Product.model.js";
-import { dbDeleteProductById, dbGetAllProducts, dbGetProductsById, dbRegisterProduct } from "../services/product.service.js";
+import { dbDeleteProductById, dbGetAllProducts, dbGetProductsById, dbGetProductsGroupedByCategory, dbRegisterProduct } from "../services/product.service.js";
 
 const registerProduct = async (req, res) => {
 
@@ -36,6 +36,23 @@ const getAllProducts = async (req, res) => {
         console.error(error);
         res.json({
             msg: 'Error: No se pudo obtener el listado de productos'
+        });
+    }
+}
+
+const getProductsGroupedByCategory = async (req, res) => {
+    const products = await dbGetProductsGroupedByCategory();
+    try {
+
+        res.json({
+            msg: 'Obtiene todos los productos agrupados por categoria',
+            products
+        });
+    }
+    catch (error) {
+        console.error(error);
+        res.json({
+            msg: 'Error: No se pudo obtener el listado de productos agrupados por categoria'
         });
     }
 }
@@ -109,5 +126,6 @@ export {
     getAllProducts,
     getProductsById,
     deleteProductById,
-    updateProductsById
+    updateProductsById,
+    getProductsGroupedByCategory
 }
