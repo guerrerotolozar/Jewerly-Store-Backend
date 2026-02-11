@@ -24,7 +24,7 @@ const productSchema = new Schema(
         type: String, 
         required: false, 
         trim: true },
-
+   
     // Precio / estado
     price: { 
         type: Number, 
