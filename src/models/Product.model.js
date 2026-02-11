@@ -65,7 +65,7 @@ const productSchema = new Schema(
         trim: true 
     }, // ej: talla anillo "7" o largo collar "45cm"
 
-    weightGrams: { 
+    weigthGrams: { 
         type: Number, 
         required: true, 
         min: 0 

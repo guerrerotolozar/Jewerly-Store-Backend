@@ -5,6 +5,7 @@ import authorizationUser from '../middlewares/authorization.middleware.js';
 
 const router = express.Router();
 
+
 router.post('/',
     //[ authenticationUser, authorizationUser ], 
     registerProduct);
@@ -17,6 +18,7 @@ router.get('/category',
 router.get('/:idProducts',[ authenticationUser, authorizationUser ], getProductsById);
 router.delete('/:idProducts',[ authenticationUser, authorizationUser ], deleteProductById);
 router.patch('/:idProducts',[ authenticationUser, authorizationUser ], updateProductsById);
+
 
 
 
