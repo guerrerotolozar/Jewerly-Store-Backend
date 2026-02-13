@@ -58,7 +58,7 @@ const reNewToken = async ( req, res ) => {
 
     //paso 3
     const newPayload = {
-        id : userFound.id,          // Id 
+        id : userFound._id,          // Id 
         name: userFound.name,       // Hola, Fulanito! 
         email: userFound.email,     // Para realizar comunicaciones (anónimas)
         role: userFound.role        // Para informar al frontend sobre la autorización que tienen los usuarios para acceder a las diferentes interfaces 

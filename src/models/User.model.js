@@ -1,5 +1,6 @@
 // desesctructura y "saca" unicamente la clase Schema de el programa mongoose
 import {Schema, model} from 'mongoose';
+import { ALLOWED_ROLES, ROLES } from '../config/global.config.js';
 
 
 
@@ -53,8 +54,8 @@ const userSchema = new Schema({
     role:/*"admin"*/{
         type : String,
         require : true,
-        enum : ['admin','colaborator','registered'], // Crear "predeterminados"
-        default: 'registered'
+        enum : ALLOWED_ROLES, // Crear "predeterminados"
+        default: ROLES.REGISTERED
     },
     userStatus : {
         type : Boolean,

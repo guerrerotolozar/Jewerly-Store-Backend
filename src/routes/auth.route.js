@@ -4,6 +4,7 @@ import { loginUser, reNewToken } from '../controllers/auth.controller.js';
 import authenticationUser from '../middlewares/authentication.middleware.js';
 import authorizationUser from '../middlewares/authorization.middleware.js';
 import withoutRole from '../middlewares/without-role.middleware.js';
+import { ALLOWED_ROLES } from '../config/global.config.js';
 
 const router = Router ();
 
@@ -14,7 +15,7 @@ router.post('/register',withoutRole, registerUser);
 
 router.get( 
     '/renew-token', 
-    [ authenticationUser, authorizationUser ], 
+    [ authenticationUser, authorizationUser(ALLOWED_ROLES) ], 
     reNewToken 
 );
 
