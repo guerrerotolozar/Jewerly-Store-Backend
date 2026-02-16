@@ -17,20 +17,20 @@ const loginUser = async (req, res) => {
     if (!isMatch) {
         return res.json({ msg: 'Credenciales inválidas' });
     }
-    
+
     //paso 3: generar credencial digital (token)
     const payload = {
-        id : userFound.id,          // Id 
+        id: userFound.id,          // Id 
         name: userFound.name,       // Hola, Fulanito! 
         email: userFound.email,     // Para realizar comunicaciones (anonimas)
-        role: userFound.role        // Para informar al frontend sobre la autorización que tienen los usuarios para acceder a las diferentes interfaces 
+        roles: userFound.roles       // Para informar al frontend sobre la autorización que tienen los usuarios para acceder a las diferentes interfaces 
     };
 
-    const token = generateToken( payload );
+    const token = generateToken(payload);
 
     // res.json ( {msg: "usuario logueado", token})
 
-    
+
     // paso 4: Eliminar propiedades con datos sensibles 
 
     //userFound es un BSON (JSON Binario)
@@ -41,7 +41,7 @@ const loginUser = async (req, res) => {
     res.json({ token, user: jsonUserFound });
 }
 
-const reNewToken = async ( req, res ) => {
+const reNewToken = async (req, res) => {
     // Extrae el payload del objeto requests que hemos asignado desde el Middleware de Autenticación
 
 
@@ -49,19 +49,19 @@ const reNewToken = async ( req, res ) => {
     const payload = req.payload;
 
     //paso 2
-    const userFound = await dbGetUserByEmail ( payload.email);
-    if ( !userFound ){
-        return res.json ({
-            msg:"no se renueva el token. El usuario ha sido eliminado o está inactivo"
+    const userFound = await dbGetUserByEmail(payload.email);
+    if (!userFound) {
+        return res.json({
+            msg: "no se renueva el token. El usuario ha sido eliminado o está inactivo"
         })
     }
 
     //paso 3
     const newPayload = {
-        id : userFound._id,          // Id 
+        id: userFound._id,          // Id 
         name: userFound.name,       // Hola, Fulanito! 
         email: userFound.email,     // Para realizar comunicaciones (anónimas)
-        role: userFound.role        // Para informar al frontend sobre la autorización que tienen los usuarios para acceder a las diferentes interfaces 
+        roles: userFound.roles       // Para informar al frontend sobre la autorización que tienen los usuarios para acceder a las diferentes interfaces 
     }
 
     //paso 4
@@ -72,7 +72,7 @@ const reNewToken = async ( req, res ) => {
     delete jsonUserFound.password
 
     //paso 6
-    res.json({ token : newToken, user : jsonUserFound });
+    res.json({ token: newToken, user: jsonUserFound });
 }
 
 export {
