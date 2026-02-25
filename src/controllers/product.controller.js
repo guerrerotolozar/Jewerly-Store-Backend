@@ -24,7 +24,9 @@ const registerProduct = async (req, res) => {
     }
 }
 const getAllProducts = async (req, res) => {
-    const products = await dbGetAllProducts();
+    const { category } = req.query;
+    const query = category ? { category } : {};
+    const products = await dbGetAllProducts(query);
     try {
 
         res.json({
