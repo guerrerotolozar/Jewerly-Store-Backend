@@ -4,13 +4,14 @@ const dbRegisterProduct = async (newProduct) => {
     return await productModel.create(newProduct);   // async/await porque el modelo retorna una promesa
 }
 
-const dbGetAllProducts = async () => {
-    return await productModel.find({ isActive: true }).populate(['category']);
+const dbGetAllProducts = async (filters = {}) => {
+    const query = { isActive: true, ...filters };
+    return await productModel.find(query).populate(['category']);
 }
 
 const dbGetProductsGroupedByCategory = async () => {
     const result = await productModel.aggregate([
-        
+
         // 1️⃣ Filtrar productos activos
         {
             $match: { isActive: true }
