@@ -15,7 +15,11 @@ const app = express();                      // Invocando core Express
 const PORT = process.env.PORT || 3030;
 
 // Middlewares
-app.use(cors()) // Permite peticiones desde Angular
+app.use(cors({
+  origin: '*', // Permitir desde cualquier origen (ej. S3). En producción se puede restringir al dominio de S3.
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Token']
+})) // Permite peticiones desde Angular y habilitar X-Token para carrito/favoritos
 app.use(express.json())
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/user', userRoute);
